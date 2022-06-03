@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use App\Models\Recruitment;
+use App\Models\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 

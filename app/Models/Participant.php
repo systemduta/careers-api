@@ -18,4 +18,8 @@ class Participant extends Model
     {
         return $this->belongsTo(Recruitment::class);
     }
+    public function file()
+    {
+        return $this->hasMany(File::class);
+    }
 }

@@ -13,6 +13,7 @@ use App\Models\Peserta;
 use App\Models\Recruitment;
 use App\Models\Participant;
 use App\Models\Category;
+use App\Models\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
