@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Participant;
 use App\Models\Recruitment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -46,8 +47,13 @@ class HomeController extends Controller
     // }
     public function lowongan()
     {
-        $lowongan = Recruitment::all();
-        return response()->json(['data' => $lowongan]);
+        $data = Recruitment::where('date', date('Y-m-d H:i:s'))-> orderBy('id','DESC');
+
+        if (Carbon::now() >= $data) {
+            return response()->json(['data' => $data]);
+        }else {
+            return response()->json(['message','Data tidak ditemukan']);
+        }
     }
 
     // public function recruitment()
@@ -116,36 +122,65 @@ class HomeController extends Controller
         $peserta_lamar->information     = $request->information;
         $peserta_lamar->save();
 
-        $file_foto  = $request->foto;
-        $filefoto   = $file_foto->getClientOriginalExtension();
-        $nama_foto = date('YmdHis').".$filefoto";
-        $upload_path = 'profile';
-        $file_foto->move($upload_path, $nama_foto);
+        if($request->hasFile('cv')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('cv')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('cv')->getClientOriginalExtension();
+            $filecvSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('cv')->move(public_path('cv'),$filecvSimpan);
 
-        $file_cv    = $request->cv;
-        $filecv   = $file_cv->getClientOriginalExtension();
-        $nama_cv = date('YmdHis').".$filecv";
-        $upload_cv = 'cv';
-        $file_cv->move($upload_cv, $nama_foto);;
+        }else{
+            // tidak ada file yang diupload
+            $filecvSimpan =  null;
+        }
 
-        $file_portofolio       = $request->fortofolio;
-        $fileportofolio        = $file_portofolio->getClientOriginalExtension();
-        $nama_portofolio = date('YmdHis').".$fileportofolio";
-        $upload_portofolio = 'resume';
-        $file_portofolio->move($upload_portofolio, $nama_portofolio);
+        if($request->hasFile('fortofolio')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('fortofolio')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('fortofolio')->getClientOriginalExtension();
+            $filefortofolioSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('fortofolio')->move(public_path('fortofolio'),$filefortofolioSimpan);
 
-        $file_certivicate      = $request->certificate;
-        $certivicate           = $file_certivicate->getClientOriginalExtension();
-        $nama_certivicate      = date('YmdHis').".$certivicate";
-        $upload_certivicate    = 'certivicate';
-        $file_certivicate->move(public_path($upload_certivicate, $file_certivicate));
+        }else{
+            // tidak ada file yang diupload
+            $filefortofolioSimpan =  null;
+        }
+
+        if($request->hasFile('certificate')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('certificate')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('certificate')->getClientOriginalExtension();
+            $filecertificateSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('certificate')->move(public_path('certificate'),$filecertificateSimpan);
+
+        }else{
+            // tidak ada file yang diupload
+            $filecertificateSimpan =  null;
+        }
+
+        if($request->hasFile('foto')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filefotoSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('foto')->move(public_path('foto'),$filefotoSimpan);
+
+        }else{
+            // tidak ada file yang diupload
+            $filefotoSimpan =  null;
+        }
+
 
         $peserta                  = new File();
         $peserta->participant_id  = $peserta_lamar->id;
-        $peserta->cv              = $nama_cv;
-        $peserta->fortofolio      = $nama_portofolio;
-        $peserta->certificate     = $nama_certivicate;
-        $peserta->foto            = $nama_foto;
+        $peserta->cv              = $filecvSimpan;
+        $peserta->fortofolio      = $filefortofolioSimpan;
+        $peserta->certificate     = $filecertificateSimpan;
+        $peserta->foto            = $filefotoSimpan;
         $peserta->save();
 
         return response()->json(['message' => 'Berkas Berhasil Ditambahkan']);

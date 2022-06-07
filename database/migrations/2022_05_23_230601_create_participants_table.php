@@ -19,6 +19,7 @@ class CreateParticipantsTable extends Migration
             // $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->string('gender');
+            $table->string('phone');
             $table->string('place_birth');
             $table->date('date_birth');
             $table->string('email');

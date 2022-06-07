@@ -18,34 +18,38 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        // $data = Participant::with('recruitment')
-        //     ->where('category_id', 2)
-        //     ->orderBy('id', 'DESC')
-        //     ->get();
-        $data = Recruitment::with('participant')
+        $data = DB::table('recruitments')
+                ->join('participants', 'recruitments.id', '=', 'participants.recruitment_id')
+                ->join('files','participants.id', '=', 'files.participant_id')
+                ->select('recruitments.name as position', 'participants.*','files.*')
                 ->where('category_id', 2)
-                ->orderBy('id', 'DESC')
+                ->orderBy('recruitments.id', 'DESC')
                 ->get();
-        // $data = DB::table('recruitments')
-        //         ->join('participants', 'recruitments.id', '=', 'participants.recruitment_id')
-        //         ->select('recruitments.name', 'participants.*')
-        //         ->where('category_id', 2)
-        //         ->orderBy('recruitments.id', 'DESC')
+
+        // $deliveries = Delivery::with('order.product')
+        //         ->whereHas('order', function($query) use ($customerID) {
+        //                     $query->whereUserId($customerID);
+        //                 })
+        //         ->orderBy('date')
+        //         ->get();
+
+        // $data = Participant::with(['recruitment', 'file'])
+        //         ->when('recruitment', function($q) use ($r) {
+        //             $q->where($r);
+        //         })
         //         ->get();
         return response()->json(['data' => $data]);
     }
 
     public function recruitment()
     {
-        $data = Recruitment::with('participant')
+        $data = DB::table('recruitments')
+                ->join('participants', 'recruitments.id', '=', 'participants.recruitment_id')
+                ->join('files','participants.id', '=', 'files.participant_id')
+                ->select('recruitments.name as position', 'participants.*','files.*')
                 ->where('category_id', 1)
-                ->orderBy('id', 'DESC')
+                ->orderBy('recruitments.id', 'DESC')
                 ->get();
-        // $data = DB::table('recruitments')
-        //         ->join('participants', 'recruitments.id', '=', 'participants.recruitment_id')
-        //         ->where('category_id', 1)
-        //         ->orderBy('recruitments.id', 'DESC')
-        //         ->get();
 
         return response()->json(['data' => $data]);
     }
@@ -79,10 +83,8 @@ class ParticipantController extends Controller
      */
     public function show($id)
     {
-        $peserta = Participant::where('id', $id)->first();
-        $file = File::where('participant_id', $peserta->id)->get();
-
-        return response()->json(['message' => 'Menampilkan File Participant', 'data' => $file]);
+        $data = Participant::with(['recruitment','file'])->findOrFail($id);
+        return response()->json(['message' => 'Menampilkan File Participant', 'data' => $data]);
     }
 
     /**

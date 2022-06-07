@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use App\Models\Recruitment;
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon as SupportCarbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Storage;
-use DB;
 
 class RecruitmentController extends Controller
 {
@@ -26,8 +28,26 @@ class RecruitmentController extends Controller
      */
     public function index()
     {
-        $lowongan = Recruitment::all();
-        return response()->json(['success' => true, 'message' => 'List Semua Data', 'data' => $lowongan], 200);
+        $data = Recruitment::with(['category'])->orderBy('id','DESC')->get();
+        // $current = Carbon::now();
+        // $trialExpires = $current->addDays($data->date);
+        // $data = DB::table('categories')
+        //     ->join('recruitments', 'categories.id', '=', 'recruitments.category_id')
+        //     ->select(
+        //         'categories.id as category_id',
+        //         'categories.name as category',
+        //         'recruitments.id',
+        //         'recruitments.name',
+        //         'recruitments.qualification',
+        //         'recruitments.jobdesc',
+        //         'recruitments.image',
+        //         'recruitments.address',
+        //         'recruitments.type',
+        //         'recruitments.date as status',
+        //     )
+        //     ->orderBy('recruitments.id', 'DESC')
+        //     ->get();
+        return response()->json(['success' => true, 'message' => 'List Semua Data', 'data' => $data], 200);
     }
 
     /**

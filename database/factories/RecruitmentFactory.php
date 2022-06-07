@@ -22,7 +22,7 @@ class RecruitmentFactory extends Factory
             'address' => $this->faker->address(),
             'type' => '',
             'image' => null,
-            'date' => $this->faker->date(),
+            'date' => now(),
             'created_at' => now(),
             'updated_at' => now(),
         ];
