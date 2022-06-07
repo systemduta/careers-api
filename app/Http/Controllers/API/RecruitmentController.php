@@ -29,6 +29,16 @@ class RecruitmentController extends Controller
     public function index()
     {
         $data = Recruitment::with(['category'])->orderBy('id','DESC')->get();
+
+        for($i=0; $i<count($data); $i++)
+        {
+            $lowongan = Carbon::parse($data[$i]->date);
+            if($lowongan->isPast())
+            {
+                $data[$i]->status=0;
+            }else{
+                $data[$i]->status=1;
+            }
         // $current = Carbon::now();
         // $trialExpires = $current->addDays($data->date);
         // $data = DB::table('categories')
@@ -47,6 +57,7 @@ class RecruitmentController extends Controller
         //     )
         //     ->orderBy('recruitments.id', 'DESC')
         //     ->get();
+        }
         return response()->json(['success' => true, 'message' => 'List Semua Data', 'data' => $data], 200);
     }
 

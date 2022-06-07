@@ -47,13 +47,27 @@ class HomeController extends Controller
     // }
     public function lowongan()
     {
-        $data = Recruitment::where('date', date('Y-m-d H:i:s'))-> orderBy('id','DESC');
+        // $data = Recruitment::where('date', date('Y-m-d H:i:s'))-> orderBy('id','DESC');
+        $data = Recruitment::all();
 
-        if (Carbon::now() >= $data) {
-            return response()->json(['data' => $data]);
-        }else {
-            return response()->json(['message','Data tidak ditemukan']);
+        for($i=0; $i<count($data); $i++)
+        {
+            $lowongan = Carbon::parse($data[$i]->date);
+            if($lowongan->isPast())
+            {
+                $data[$i]->status=0;
+            }else{
+                $data[$i]->status=1;
+            }
+
         }
+        return response()->json(['data'=> $data]);
+
+        // if (Carbon::now() >= $data) {
+        //     return response()->json(['data' => $data]);
+        // }else {
+        //     return response()->json(['message','Data tidak ditemukan']);
+        // }
     }
 
     // public function recruitment()

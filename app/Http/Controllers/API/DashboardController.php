@@ -19,36 +19,29 @@ class DashboardController extends Controller
     }
     public function index()
     {
-        // if(Auth::user()->role=='admin')
-        // {
-            // $data = Recruitment::with('participant')
-            //     ->where('category_id', 2)
-            //     ->orderBy('id', 'DESC')
-            //     ->count();
-
-            $data = DB::table('participants')
+        $data = Recruitment::all()->count();
+        $internship = DB::table('participants')
                     ->join('recruitments', 'recruitments.id', '=', 'participants.recruitment_id')
                     ->where('recruitments.category_id', '=', 2)
                     ->count();
+        $fulltime = DB::table('participants')
+                ->join('recruitments', 'recruitments.id', '=', 'participants.recruitment_id')
+                ->where('recruitments.category_id', '=', 1)
+                ->count();
 
-            return response()->json(['message' => 'Jumlah Participant', 'data' => $data]);
+        return response()->json(['message' => 'Jumlah Lowongan', 'data' => $data,
+                                'pesan'=> 'Jumlah Participant Internship', 'internship' => $internship,
+                                'index'=> 'Jumlah Participant Fulltime', 'fulltime' => $fulltime]);
         // }
     }
-    public function recruitment()
-    {
-        // if(Auth::user()->role=='admin')
-        // {
-            // $data = Recruitment::with('participant')
-            //     ->where('category_id', 2)
-            //     ->orderBy('id', 'DESC')
-            //     ->count();
+    // public function recruitment()
+    // {
 
-            $data = DB::table('participants')
-                    ->join('recruitments', 'recruitments.id', '=', 'participants.recruitment_id')
-                    ->where('recruitments.category_id', '=', 1)
-                    ->count();
+    //         $data = DB::table('participants')
+    //                 ->join('recruitments', 'recruitments.id', '=', 'participants.recruitment_id')
+    //                 ->where('recruitments.category_id', '=', 1)
+    //                 ->count();
 
-            return response()->json(['message' => 'Jumlah Participant', 'data' => $data]);
-        // }
-    }
+    //         return response()->json(['message' => 'Jumlah Participant', 'data' => $data]);
+    // }
 }

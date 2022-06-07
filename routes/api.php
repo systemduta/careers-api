@@ -58,8 +58,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('lowongan-detail/{id}', [RecruitmentController::class, 'show']);
     Route::delete('lowongan-delete/{id}', [RecruitmentController::class, 'destroy']);
 
-    Route::get('dashboard/internship', [DashboardController::class, 'index']);
-    Route::get('dashboard/recruitment', [DashboardController::class, 'recruitment']);
+    Route::get('dashboard', [DashboardController::class, 'index']);
+    // Route::get('dashboard/recruitment', [DashboardController::class, 'recruitment']);
 
     Route::get('participant/internship', [ParticipantController::class, 'index']);
     Route::get('participant/recruitment', [ParticipantController::class, 'recruitment']);
