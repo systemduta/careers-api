@@ -74,7 +74,7 @@ class RecruitmentController extends Controller
             $response['message'] = 'Lowongan Gagal Ditambahkan';
             $response['error'] = $validate->errors();
 
-            return response()->json('response', 401);
+            return response()->json(['response' => $response], 401);
         }
         // $file = $request->image;
         // $filename = $file->getClientOriginalName();
@@ -149,9 +149,9 @@ class RecruitmentController extends Controller
         if($validate->fails())
         {
             $response['status'] = false;
-            $response['message'] = 'Lowongan Gagal Ditambahkan';
+            $response['message'] = 'Lowongan Gagal Diupdate';
             $response['error'] = $validate->errors();
-            return response()->json('response', 401);
+            return response()->json(['response'=> $response], 401);
         }
 
         if($request->hasFile('file_image'))
