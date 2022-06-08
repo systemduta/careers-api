@@ -86,6 +86,15 @@ class ParticipantController extends Controller
         $data = Participant::with(['recruitment','file'])->findOrFail($id);
         return response()->json(['message' => 'Menampilkan File Participant', 'data' => $data]);
     }
+    public function downloadCv()
+    {
+        // $data = Participant::where('id', $id)->first();
+        $filePath = public_path('cv');
+    	$headers = ['Content-Type: application/jpg'];
+    	$fileName = time().'.jpg';
+        // return response()->download(public_path('FOTO'), 'cv file');
+        return response()->download($filePath, $fileName, $headers);
+    }
 
     /**
      * Show the form for editing the specified resource.

@@ -21,6 +21,7 @@ class HomeController extends Controller
             ->select('*')
             ->where('name', 'like', "%$name%")
             ->where('category_id', 'like', "%$category_id%")
+            ->where('date', '>=', Carbon::now())
             ->get();
 
         if(!count($filteredVacancies)){

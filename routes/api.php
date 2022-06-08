@@ -38,7 +38,6 @@ use Illuminate\Support\Facades\Route;
 // Route::post('lowongan/peserta/{id}', [LandingController::class, 'daftar']);
 
 
-// Route::get('search/{data}', [HomeController::class, 'search']);
 Route::get('search', [HomeController::class, 'filter']);
 // Route::get('search', [HomeController::class, 'search']);
 Route::get('careers', [HomeController::class, 'lowongan']);
@@ -64,6 +63,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('participant/internship', [ParticipantController::class, 'index']);
     Route::get('participant/recruitment', [ParticipantController::class, 'recruitment']);
     Route::get('participant/{id}', [ParticipantController::class, 'show']);
+    Route::get('file', [ParticipantController::class, 'downloadCv']);
 
     // Route::resource('careers', RecruitmentController::class);
 });

@@ -39,24 +39,6 @@ class RecruitmentController extends Controller
             }else{
                 $data[$i]->status=1;
             }
-        // $current = Carbon::now();
-        // $trialExpires = $current->addDays($data->date);
-        // $data = DB::table('categories')
-        //     ->join('recruitments', 'categories.id', '=', 'recruitments.category_id')
-        //     ->select(
-        //         'categories.id as category_id',
-        //         'categories.name as category',
-        //         'recruitments.id',
-        //         'recruitments.name',
-        //         'recruitments.qualification',
-        //         'recruitments.jobdesc',
-        //         'recruitments.image',
-        //         'recruitments.address',
-        //         'recruitments.type',
-        //         'recruitments.date as status',
-        //     )
-        //     ->orderBy('recruitments.id', 'DESC')
-        //     ->get();
         }
         return response()->json(['success' => true, 'message' => 'List Semua Data', 'data' => $data], 200);
     }
