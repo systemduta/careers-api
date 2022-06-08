@@ -62,17 +62,7 @@ class HomeController extends Controller
             }
 
         }
-        // if ($data->status=1)
-        // {
             return response()->json(['data'=> $data]);
-        // }else{
-        //     return response()->json(['message','Data tidak ditemukan']);
-        // }
-        // if (Carbon::now() >= $data) {
-        //     return response()->json(['data' => $data]);
-        // }else {
-        //     return response()->json(['message','Data tidak ditemukan']);
-        // }
     }
 
     // public function recruitment()

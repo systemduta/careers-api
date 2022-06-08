@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     Route::get('participant/internship', [ParticipantController::class, 'index']);
     Route::get('participant/recruitment', [ParticipantController::class, 'recruitment']);
+    Route::post('update-status/{id}', [ParticipantController::class, 'updateStatus']);
     Route::get('participant/{id}', [ParticipantController::class, 'show']);
     Route::get('file', [ParticipantController::class, 'downloadCv']);
 

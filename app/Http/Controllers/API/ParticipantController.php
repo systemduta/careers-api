@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use App\Models\Recruitment;
 use App\Models\File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -114,9 +115,24 @@ class ParticipantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateStatus(Request $request, $id)
     {
-        //
+        // $data = Participant::with(['recruitment', 'file'])->where('id', $id)->get();
+        $validate = Validator::make($request->all(), [
+            'status'          => 'required',
+        ]);
+        if($validate->fails())
+        {
+            $response['status'] = false;
+            $response['message'] = 'Status Gagal Diubah';
+            $response['error'] = $validate->errors();
+            return response()->json(['response'=> $response], 401);
+        }
+
+        Participant::with(['recruitment', 'file'])->where('id', $id)->update([
+                "status"   => $request->status,
+            ]);
+            return response()->json(['message' => 'Status Berhasil diubah']);
     }
 
     /**
