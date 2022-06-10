@@ -31,6 +31,8 @@ class CreateParticipantsTable extends Migration
             $table->string('univercity');
             $table->string('media_social')->nullable();
             $table->string('information')->nullable();
+            $table->string('province');
+            $table->integer('portal_code');
             $table->timestamps();
 
             $table->foreign('recruitment_id')->references('id')->on('recruitments');

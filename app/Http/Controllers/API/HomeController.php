@@ -101,6 +101,7 @@ class HomeController extends Controller
             'education'     => 'required',
             'major'         => 'required',
             'univercity'    => 'required',
+            'province'    => 'required',
             'cv'            => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
             'fortofolio'    => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
             'foto'          => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
@@ -129,6 +130,8 @@ class HomeController extends Controller
         $peserta_lamar->univercity      = $request->univercity;
         $peserta_lamar->media_social    = $request->media_social;
         $peserta_lamar->information     = $request->information;
+        $peserta_lamar->province        = $request->province;
+        $peserta_lamar->portal_code     = $request->portal_code;
         $peserta_lamar->save();
 
         if($request->hasFile('cv')){

@@ -11,7 +11,7 @@ class Participant extends Model
 
     protected $fillable = [
         'recruitment_id ', 'name','telp', 'gender', 'place_birth', 'date_birth','email','age','address','city',
-        'education','major','univercity','media_social','information'
+        'education','major','univercity','media_social','information', 'province', 'portal_code'
     ];
 
     public function recruitment()

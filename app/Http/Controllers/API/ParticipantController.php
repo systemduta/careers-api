@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use App\Models\Recruitment;
 use App\Models\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -87,14 +88,21 @@ class ParticipantController extends Controller
         $data = Participant::with(['recruitment','file'])->findOrFail($id);
         return response()->json(['message' => 'Menampilkan File Participant', 'data' => $data]);
     }
-    public function downloadCv()
+    public function downloadCv($id, $idFile)
     {
         // $data = Participant::where('id', $id)->first();
-        $filePath = public_path('cv');
-    	$headers = ['Content-Type: application/jpg'];
-    	$fileName = time().'.jpg';
+        // $file = File::where('participant_id', $data->id)->first();
+        // $file = File::where('id', $idFile)->first();
+        $url = Storage::url($id, $idFile);
+        $download=DB::table('files')->get();
+        return Storage::download($url);
+        // $pathToFile = storage_path('public/cv' . $file->cv);
+        // $filePath = public_path('cv');
+    	// $headers = ['Content-Type: application/pdf'];
+    	// $fileName = time().'.jpg';
         // return response()->download(public_path('FOTO'), 'cv file');
-        return response()->download($filePath, $fileName, $headers);
+
+        // return response()->download($id);
     }
 
     /**
