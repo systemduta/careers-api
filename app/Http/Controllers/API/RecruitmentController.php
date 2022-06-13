@@ -73,7 +73,7 @@ class RecruitmentController extends Controller
             $response['message'] = 'Lowongan Gagal Ditambahkan';
             $response['error'] = $validate->errors();
 
-            return response()->json(['response' => $response], 401);
+            return response()->json($validate->errors(), 401);
         }
 
         if($request->hasFile('image')){
@@ -143,7 +143,7 @@ class RecruitmentController extends Controller
             'name'          => 'required',
             'jobdesc'       => 'required',
             'qualification' => 'required',
-            // 'image'         => 'mimes:jpeg,png,jpg|max:2048'
+            'image'         => 'mimes:jpeg,png,jpg|max:2048'
         ]);
         if($validate->fails())
         {
@@ -186,8 +186,13 @@ class RecruitmentController extends Controller
      */
     public function destroy($id)
     {
-        $lowongan = Recruitment::find($id);
+        $lowongan = Recruitment::with(['participant'])->count();
+
+        if ($lowongan > 0 )
+        return response()->json(['message' => 'Jobs Tidak bisa di hapus Karena ada Data Pelamar'],500);
+
         $lowongan->delete();
+
         return response()->json(['message' => 'Lowongan berhasil dihapus']);
     }
 }

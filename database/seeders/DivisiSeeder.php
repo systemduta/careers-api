@@ -25,8 +25,17 @@ class DivisiSeeder extends Seeder
             ],
             [
                 'name'  => 'Business Development',
-                'code'  => 'DB'
+                'code'  => 'BD'
+            ],
+            [
+                'name'  => 'Finance',
+                'code'  => 'FC'
+            ],
+            [
+                'name'  => 'Tax',
+                'code'  => 'TX'
             ]
+
         ]);
     }
 }
