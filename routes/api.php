@@ -40,6 +40,7 @@ Route::post('/add', [UserController::class, 'store']);
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get_user', [UserController::class, 'get_user']);
+    Route::get('change-passwod', [UserController::class, 'get_update']);
     Route::get('lowongan', [RecruitmentController::class, 'index']);
     Route::post('lowongan-create', [RecruitmentController::class, 'store']);
     Route::post('lowongan-update/{id}', [RecruitmentController::class, 'update']);

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 // use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 // use Auth;
 
@@ -123,5 +124,20 @@ class UserController extends Controller
             'success' => true,
             'user'    => auth()->user(),
         ], 200);
+    }
+
+    public function get_update(Request $request)
+    {
+        $validatedRequest = $request->validate([
+            'user_id' => 'required',
+            'current_password' => 'required|current_password',
+            'password'  => ['required','min:6','max:16','confirmed', Password::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
+            'password_confirmation' => 'required|same:password'
+        ]);
+
+        User::find($validatedRequest['id'])->update([
+            'password' => Hash::make($validatedRequest['password'])
+        ]);
+        return response()->json('lorem ipsum');
     }
 }
