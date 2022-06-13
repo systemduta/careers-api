@@ -19,7 +19,7 @@ class CreateFilesTable extends Migration
             $table->string('foto');
             $table->string('cv');
             $table->string('fortofolio');
-            $table->string('certificate');
+            $table->string('certificate')->nullable();
             $table->timestamps();
 
             $table->foreign('participant_id')->references('id')->on('participants');

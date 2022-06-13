@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'email'     => 'admin.careers@maesagroup.com',
             'password'  => bcrypt('password'),
             'division_id'  => 1,
-            // 'role'      => 'admin'
+            'role'      => 'admin'
         ]);
     }
 }

@@ -29,17 +29,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Route::get('lowongan/peserta', [LandingController::class, 'lowongan']);
-// Route::get('lowongan/peserta/{id}', [LandingController::class, 'show']);
-// Route::post('lowongan/peserta/{id}', [LandingController::class, 'daftar']);
-
-
 Route::get('search', [HomeController::class, 'filter']);
-// Route::get('search', [HomeController::class, 'search']);
 Route::get('careers', [HomeController::class, 'lowongan']);
 Route::get('careers-detail/{id}', [HomeController::class, 'show']);
 Route::post('careers-daftar/{id}', [HomeController::class, 'daftar']);
@@ -47,8 +37,7 @@ Route::post('careers-daftar/{id}', [HomeController::class, 'daftar']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/add', [UserController::class, 'store']);
-// Route::post('lowongan', [LowonganController::class, 'store']);
-// Auth::routes();
+
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('get_user', [UserController::class, 'get_user']);
     Route::get('lowongan', [RecruitmentController::class, 'index']);
@@ -58,13 +47,14 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::delete('lowongan-delete/{id}', [RecruitmentController::class, 'destroy']);
 
     Route::get('dashboard', [DashboardController::class, 'index']);
-    // Route::get('dashboard/recruitment', [DashboardController::class, 'recruitment']);
 
     Route::get('participant/internship', [ParticipantController::class, 'index']);
     Route::get('participant/recruitment', [ParticipantController::class, 'recruitment']);
     Route::post('update-status/{id}', [ParticipantController::class, 'updateStatus']);
     Route::get('participant/{id}', [ParticipantController::class, 'show']);
-    Route::get('file/{id}/{idFile}', [ParticipantController::class, 'downloadCv']);
-
-    // Route::resource('careers', RecruitmentController::class);
+    // Route::get('file/{id}/{idFile}', [ParticipantController::class, 'downloadCv']);
+    Route::get('cv/{id}', [ParticipantController::class, 'downloadCv']);
+    Route::get('fortofolio/{id}', [ParticipantController::class, 'downloadFT']);
+    Route::get('foto/{id}', [ParticipantController::class, 'downloadFoto']);
+    Route::get('certivicate/{id}', [ParticipantController::class, 'downloadCFT']);
 });

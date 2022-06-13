@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 // use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 // use Auth;
 
 class UserController extends Controller
@@ -122,6 +122,6 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'user'    => auth()->user(),
-        ], 400);
+        ], 200);
     }
 }

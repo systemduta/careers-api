@@ -10,8 +10,8 @@ class Participant extends Model
     use HasFactory;
 
     protected $fillable = [
-        'recruitment_id ', 'name','telp', 'gender', 'place_birth', 'date_birth','email','age','address','city',
-        'education','major','univercity','media_social','information', 'province', 'portal_code'
+        'recruitment_id ', 'name','phone', 'gender', 'place_birth', 'date_birth','email','age','address','city',
+        'education','major','univercity','media_social','information', 'province', 'postal_code','status','district'
     ];
 
     public function recruitment()

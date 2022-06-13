@@ -16,6 +16,10 @@ class DivisiSeeder extends Seeder
     {
         DB::table('divisions')->insert([
             [
+                'name'  => 'People System',
+                'code'  => 'PS'
+            ],
+            [
                 'name'  => 'Digital & IT',
                 'code'  => 'DIT'
             ],

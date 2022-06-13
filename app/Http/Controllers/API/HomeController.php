@@ -101,10 +101,11 @@ class HomeController extends Controller
             'education'     => 'required',
             'major'         => 'required',
             'univercity'    => 'required',
-            'province'    => 'required',
-            'cv'            => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
-            'fortofolio'    => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
-            'foto'          => 'required|mimes:png,jpg,jpeg,pdf|max:2048',
+            'province'      => 'required',
+            'cv'            => 'required|mimes:pdf|max:5048',
+            'fortofolio'    => 'required|mimes:pdf|max:5048',
+            // 'certificate'   => 'mimes:pdf|max:5048',
+            'foto'          => 'required|mimes:png,jpg,jpeg|max:2048',
         ]);
         if($validate->fails())
             {
@@ -115,11 +116,9 @@ class HomeController extends Controller
 
         $peserta_lamar                  = new Participant();
         $peserta_lamar->recruitment_id  = $lowongan->id;
-        // $peserta_lamar->category_id     = $lowongan->category_id;
         $peserta_lamar->name            = $request->name;
         $peserta_lamar->gender          = $request->gender;
         $peserta_lamar->place_birth     = $request->place_birth;
-        // $peserta_lamar->date_birth      = date('Y-m-d', ($request->date_birth));
         $peserta_lamar->date_birth      = $request->date_birth;
         $peserta_lamar->email           = $request->email;
         $peserta_lamar->age             = $request->age;
@@ -127,11 +126,14 @@ class HomeController extends Controller
         $peserta_lamar->city            = $request->city;
         $peserta_lamar->education       = $request->education;
         $peserta_lamar->major           = $request->major;
+        $peserta_lamar->phone           = $request->phone;
         $peserta_lamar->univercity      = $request->univercity;
         $peserta_lamar->media_social    = $request->media_social;
         $peserta_lamar->information     = $request->information;
         $peserta_lamar->province        = $request->province;
-        $peserta_lamar->portal_code     = $request->portal_code;
+        $peserta_lamar->postal_code     = $request->postal_code;
+        $peserta_lamar->district        = $request->district;
+        $peserta_lamar->status          = "masuk";
         $peserta_lamar->save();
 
         if($request->hasFile('cv')){

@@ -63,10 +63,9 @@ class RecruitmentController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name'          => 'required',
-            // 'description'   => 'required',
             'jobdesc'       => 'required',
             'qualification' => 'required',
-            // 'image'         => 'image:jpeg,png,jpg|max:2048'
+            'image'         => 'image:jpeg,png,jpg|max:2048'
         ]);
         if($validate->fails())
         {
@@ -76,28 +75,29 @@ class RecruitmentController extends Controller
 
             return response()->json(['response' => $response], 401);
         }
-        // $file = $request->image;
-        // $filename = $file->getClientOriginalName();
-        // $file->move(public_path('images', $filename));
 
-        $file_image  = $request->image;
-        $fileimage   = $file_image->getClientOriginalExtension();
-        $nama_image = date('YmdHis').".$fileimage";
-        $upload_path = 'images';
-        $file_image->move($upload_path, $nama_image);
+        if($request->hasFile('image')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileimageSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('image')->move(public_path('images'),$fileimageSimpan);
 
-        // $extension = Input::file('photo')->getClientOriginalExtension();
+        }else{
+            // tidak ada file yang diupload
+            $fileimageSimpan =  null;
+        }
 
         $lowongan = new Recruitment();
         // dd($lowongan);
         $lowongan->category_id      = $request->category_id;
         $lowongan->name             = $request->name;
-        // $lowongan->description = $request->description;
         $lowongan->jobdesc          = $request->jobdesc;
         $lowongan->qualification    = $request->qualification;
         $lowongan->address          = $request->address;
         $lowongan->type             = $request->type;
-        $lowongan->image            = $nama_image;
+        $lowongan->image            = $fileimageSimpan;
         $lowongan->date             = $request->date;
         $lowongan->save();
 
@@ -141,52 +141,41 @@ class RecruitmentController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name'          => 'required',
-            // 'description'   => 'required',
             'jobdesc'       => 'required',
             'qualification' => 'required',
-            'image'         => 'image:jpeg,png,jpg|max:2048'
+            // 'image'         => 'mimes:jpeg,png,jpg|max:2048'
         ]);
         if($validate->fails())
         {
-            $response['status'] = false;
-            $response['message'] = 'Lowongan Gagal Diupdate';
-            $response['error'] = $validate->errors();
-            return response()->json(['response'=> $response], 401);
+            return response()->json($validate->errors(), 401);
         }
 
-        if($request->hasFile('file_image'))
-        {
-            $file_image  = $request->image;
-            $fileimage   = $file_image->getClientOriginalExtension();
-            $nama_image = date('YmdHis').".$fileimage";
-            $upload_path = 'images';
-            $file_image->move($upload_path, $nama_image);
+        $jobs = Recruitment::where('id',$id)->first();
 
-            Recruitment::where('id', $id)->update([
+        if($request->hasFile('image')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileimageSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('image')->move(public_path('images'),$fileimageSimpan);
+
+        }else{
+            // tidak ada file yang diupload
+            $fileimageSimpan =  $jobs->image;
+        }
+
+         Recruitment::where('id', $id)->update([
                 "category_id"   => $request->category_id,
                 "name"          => $request->name,
-                // "description" => $request->description,
                 "jobdesc"       => $request->jobdesc,
                 "qualification" => $request->qualification,
                 "address"       => $request->address,
                 "type"          => $request->type,
-                "image"         => $nama_image,
+                "image"         => $fileimageSimpan,
                 "date"          => $request->date
             ]);
-            return response()->json(['message' => 'Data Berhasil diubah']);
-        }else {
-            Recruitment::where('id', $id)->update([
-                "category_id"   => $request->category_id,
-                "name"          => $request->name,
-                // "description" => $request->description,
-                "jobdesc"       => $request->jobdesc,
-                "qualification" => $request->qualification,
-                "address"       => $request->address,
-                "type"          => $request->type,
-                "date"          => $request->date
-            ]);
-            return response()->json(['message' => 'Data Berhasil diubah']);
-        }
+        return response()->json(['message' => 'Data Berhasil diubah']);
     }
 
     /**

@@ -8,7 +8,8 @@ use App\Models\File;
 use App\Models\Participant;
 use App\Models\Recruitment;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
+
 
 class DashboardController extends Controller
 {
@@ -17,22 +18,27 @@ class DashboardController extends Controller
         $this->middleware('auth:api');
         // $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
+
     public function index()
     {
-        $data = Recruitment::all()->count();
+        $lowongan = Recruitment::all()->count();
+        $lamar = Participant::all()->count();
+
         $internship = DB::table('participants')
                     ->join('recruitments', 'recruitments.id', '=', 'participants.recruitment_id')
                     ->where('recruitments.category_id', '=', 2)
                     ->count();
         $fulltime = DB::table('participants')
-                ->join('recruitments', 'recruitments.id', '=', 'participants.recruitment_id')
-                ->where('recruitments.category_id', '=', 1)
-                ->count();
+                    ->join('recruitments', 'recruitments.id', '=', 'participants.recruitment_id')
+                    ->where('recruitments.category_id', '=', 1)
+                    ->count();
 
-        return response()->json(['message' => 'Jumlah Lowongan', 'data' => $data,
-                                'pesan'=> 'Jumlah Participant Internship', 'internship' => $internship,
-                                'index'=> 'Jumlah Participant Fulltime', 'fulltime' => $fulltime]);
-        // }
+        return response()->json([
+            'recruitment' => $lowongan,
+            'participant' => $lamar,
+            'internship'  => $internship,
+            'fulltime'    => $fulltime
+        ]);
     }
     // public function recruitment()
     // {

@@ -27,19 +27,6 @@ class ParticipantController extends Controller
                 ->where('category_id', 2)
                 ->orderBy('recruitments.id', 'DESC')
                 ->get();
-
-        // $deliveries = Delivery::with('order.product')
-        //         ->whereHas('order', function($query) use ($customerID) {
-        //                     $query->whereUserId($customerID);
-        //                 })
-        //         ->orderBy('date')
-        //         ->get();
-
-        // $data = Participant::with(['recruitment', 'file'])
-        //         ->when('recruitment', function($q) use ($r) {
-        //             $q->where($r);
-        //         })
-        //         ->get();
         return response()->json(['data' => $data]);
     }
 
@@ -88,21 +75,62 @@ class ParticipantController extends Controller
         $data = Participant::with(['recruitment','file'])->findOrFail($id);
         return response()->json(['message' => 'Menampilkan File Participant', 'data' => $data]);
     }
-    public function downloadCv($id, $idFile)
-    {
-        // $data = Participant::where('id', $id)->first();
-        // $file = File::where('participant_id', $data->id)->first();
-        // $file = File::where('id', $idFile)->first();
-        $url = Storage::url($id, $idFile);
-        $download=DB::table('files')->get();
-        return Storage::download($url);
-        // $pathToFile = storage_path('public/cv' . $file->cv);
-        // $filePath = public_path('cv');
-    	// $headers = ['Content-Type: application/pdf'];
-    	// $fileName = time().'.jpg';
-        // return response()->download(public_path('FOTO'), 'cv file');
+    // public function downloadCv($id, $idFile)
+    // {
+    //     // $data = Participant::where('id', $id)->first();
+    //     // $file = File::where('participant_id', $data->id)->first();
+    //     // $file = File::where('id', $idFile)->first();
+    //     $url = Storage::url($id, $idFile);
+    //     $download=DB::table('files')->get();
+    //     return Storage::download($url);
+    //     // $pathToFile = storage_path('public/cv' . $file->cv);
+    //     // $filePath = public_path('cv');
+    // 	// $headers = ['Content-Type: application/pdf'];
+    // 	// $fileName = time().'.jpg';
+    //     // return response()->download(public_path('FOTO'), 'cv file');
 
-        // return response()->download($id);
+    //     // return response()->download($id);
+    // }
+
+    public function downloadCv($id)
+    {
+        $data = File::where('participant_id',$id)->first();
+        return response()->download(public_path(
+                'cv/'.$data->cv,
+            ),
+            'File CV'
+        );
+    }
+
+    public function downloadFT(Request $request, $id)
+    {
+        $data = File::where('participant_id',$id)->first();
+        // $headers = ['Content-Type: application/jpg'];
+        return response()->download(public_path(
+                'fortofolio/'.$data->fortofolio,
+            ),
+            'File Fortofolio'
+        );
+    }
+
+    public function downloadFoto($id)
+    {
+        $data = File::where('participant_id',$id)->first();
+        return response()->download(public_path(
+                'foto/'.$data->foto,
+            ),
+            'File FOTO'
+        );
+    }
+
+    public function downloadCFT($id)
+    {
+        $data = File::where('participant_id',$id)->first();
+        return response()->download(public_path(
+                'certificate/'.$data->cv,
+            ),
+            'File CERTIFICATE'
+        );
     }
 
     /**
@@ -140,7 +168,7 @@ class ParticipantController extends Controller
         Participant::with(['recruitment', 'file'])->where('id', $id)->update([
                 "status"   => $request->status,
             ]);
-            return response()->json(['message' => 'Status Berhasil diubah']);
+        return response()->json(['message' => 'Status Berhasil diubah']);
     }
 
     /**
