@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Internship;
 use Illuminate\Http\Request;
 
 class InternshipController extends Controller
@@ -14,7 +15,9 @@ class InternshipController extends Controller
      */
     public function index()
     {
-        //
+        $data = Internship::with(['recruitment','magang','organisasi','prestasi'])->orderBy()->get();
+
+        return response()->json(['data' => $data]);
     }
 
     /**

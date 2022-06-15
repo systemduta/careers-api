@@ -53,6 +53,58 @@ class FulltimeController extends Controller
             return response()->json($validator->errors(),400);
         }
 
+        if($request->hasFile('cv')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('cv')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('cv')->getClientOriginalExtension();
+            $filecvSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('cv')->move(public_path('cv'),$filecvSimpan);
+
+        }else{
+            // tidak ada file yang diupload
+            $filecvSimpan =  null;
+        }
+
+        if($request->hasFile('fortofolio')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('fortofolio')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('fortofolio')->getClientOriginalExtension();
+            $filefortofolioSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('fortofolio')->move(public_path('fortofolio'),$filefortofolioSimpan);
+
+        }else{
+            // tidak ada file yang diupload
+            $filefortofolioSimpan =  null;
+        }
+
+        if($request->hasFile('certificate')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('certificate')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('certificate')->getClientOriginalExtension();
+            $filecertificateSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('certificate')->move(public_path('certificate'),$filecertificateSimpan);
+
+        }else{
+            // tidak ada file yang diupload
+            $filecertificateSimpan =  null;
+        }
+
+        if($request->hasFile('foto')){
+            // ada file yang diupload
+            $filenameWithExt = $request->file('foto')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('foto')->getClientOriginalExtension();
+            $filefotoSimpan = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('foto')->move(public_path('foto'),$filefotoSimpan);
+
+        }else{
+            // tidak ada file yang diupload
+            $filefotoSimpan =  null;
+        }
+
         $dataId = Fulltime::create([
             'recruitment_id'    => $recruitment->id,
             'name'              => $request->name,
@@ -63,19 +115,19 @@ class FulltimeController extends Controller
             'age'               => $request->age,
             'address_domicili'  => $request->address_domicili,
             'address_ktp'       => $request->address_ktp,
-            'nik'               => $request->name,
-            'religion'          => $request->name,
-            'status'            => $request->name,
-            'blood'             => $request->name,
-            'gaji'              => $request->name,
-            'pt'                => $request->name,
-            'jurusan'           => $request->name,
-            'years'             => $request->name,
-            'ipk'               => $request->name,
-            'cv'                => $request->name,
-            'portofolio'        => $request->name,
-            'sertificate'       => $request->name,
-            'foto'              => $request->name,
+            'nik'               => $request->nik,
+            'religion'          => $request->region,
+            'status'            => $request->status,
+            'blood'             => $request->blood,
+            'gaji'              => $request->gaji,
+            'pt'                => $request->pt,
+            'jurusan'           => $request->jurusan,
+            'years'             => $request->years,
+            'ipk'               => $request->ipk,
+            'cv'                => $filecvSimpan,
+            'portofolio'        => $filefortofolioSimpan,
+            'sertificate'       => $filecertificateSimpan,
+            'foto'              => $filefotoSimpan,
         ]);
     }
 
