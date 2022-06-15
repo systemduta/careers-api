@@ -15,29 +15,19 @@ class CreateInternshipsTable extends Migration
     {
         Schema::create('internships', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('recruitment_id');
-            $table->string('name');
-            $table->string('place_birth');
-            $table->date('date_birth');
-            $table->string('gender');
-            $table->string('address_domicili');
-            $table->string('email');
-            $table->string('resources');
+            $table->unsignedBigInteger('participant_id');
+            $table->string('source');
             $table->string('commitment');
             $table->string('hope');
-            $table->string('ig');
-            $table->string('fb');
+            $table->string('instagram');
+            $table->string('facebook');
             $table->string('twiter');
-            $table->string('pt');
-            $table->string('jurusan');
+            $table->string('univercity');
+            $table->string('major');
             $table->string('semester');
-            $table->string('cv');
-            $table->string('fortofolio');
-            $table->string('sertificate');
-            $table->string('foto');
             $table->timestamps();
 
-            $table->foreign('recruitment_id')->references('id')->on('recruitments');
+            $table->foreign('participant_id')->references('id')->on('participants');
         });
     }
 

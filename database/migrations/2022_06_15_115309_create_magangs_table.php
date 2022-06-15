@@ -15,15 +15,15 @@ class CreateMagangsTable extends Migration
     {
         Schema::create('magangs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('intern_id');
-            $table->string('nama_ma');
-            $table->string('posisi_ma');
-            $table->string('periode_ma');
-            $table->string('achievement_ma');
-            $table->string('benefit_ma')->nullable();
+            $table->unsignedBigInteger('internship_id');
+            $table->string('name');
+            $table->string('position');
+            $table->string('period');
+            $table->string('achievement');
+            $table->string('benefit')->nullable();
             $table->timestamps();
 
-            $table->foreign('intern_id')->references('id')->on('internships');
+            $table->foreign('internship_id')->references('id')->on('internships');
         });
     }
 

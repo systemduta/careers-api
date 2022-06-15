@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Internship;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Magang extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'intern_id','nama_ma','posisi_ma','periode_ma','achievement_ma','benefit_ma'
+    protected $guarded = [
+        'id'
     ];
 
-    public function intern()
+    public function internship()
     {
         return $this->belongsTo(Internship::class);
     }

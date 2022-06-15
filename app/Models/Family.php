@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Fulltime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Prestasi extends Model
+class Family extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'full_id','nama_p','juara_p','lingkup_p','tahun_p'
+    protected $guarded = [
+        'id'
     ];
 
     public function fulltime()

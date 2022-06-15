@@ -15,31 +15,44 @@ class CreateFulltimesTable extends Migration
     {
         Schema::create('fulltimes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('recruitment_id');
-            $table->string('name');
-            $table->string('place_birth');
-            $table->date('date_birth');
-            $table->string('gender');
+            $table->unsignedBigInteger('participant_id');
             $table->integer('age');
-            $table->string('address_domicili');
             $table->string('address_ktp');
-            $table->string('nik');
-            $table->string('email');
             $table->string('religion');
             $table->string('status');
             $table->string('blood');
             $table->string('gaji');
-            $table->string('pt');
-            $table->string('jurusan');
-            $table->string('years');
-            $table->string('ipk');
-            $table->string('cv');
-            $table->string('portofolio');
-            $table->string('sertificate');
-            $table->string('foto');
-            $table->timestamps();
+            $table->string('bb');
+            $table->string('suku');
+            
 
-            $table->foreign('recruitment_id')->references('id')->on('recruitments');
+            // Apakah Anda pernah melamar di perusahaan ini sebelumnya. Kapan & sebagai apa ? 
+            $table->string('others_1');
+            // Apakah saat ini Anda melamar di perusahaan lain? Sebagai posisi apa ?
+            $table->string('others_2');
+            // Apakah Anda berhijab (Khusus Wanita)
+            $table->string('others_3');
+            // Apa Anda memiliki sosmed ? (FB, IG, / apa)
+            $table->string('others_4');
+            // Apakah Anda pernah mengalami kecelakaan? Bila ya kapan dan apa akibat yang anda rasakan sekarang ?
+            $table->string('others_5');
+            // Apakah Anda pernah berurusan dengan polisi karena tindakan tertentu ?
+            $table->string('others_6');
+            // Bila diterima bersediakah Anda bertugas ke luar kota ?
+            $table->string('others_7');
+            // Pernahkan Anda memenangkan sebuah kejuaraan ?Jika Pernah Sebutkan ?
+            $table->string('others_8');
+            // Kenapa Anda ingin berkerja di Maesa Group Holding Company ?
+            $table->string('others_9');
+            // Kenapa menginginkan posisi yang sedang Anda lamar ?
+            $table->string('others_10');
+            // Kelebihan apa yang anda miliki untuk mengisi posisi tersebut ?
+            $table->string('others_11');
+
+            $table->text('skill');
+
+            $table->timestamps();
+            $table->foreign('participant_id')->references('id')->on('participants');
         });
     }
 

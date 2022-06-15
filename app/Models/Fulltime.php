@@ -2,31 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Family;
+use App\Models\Education;
+use App\Models\Participant;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Fulltime extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'recruitment_id','name','place_birth','date_birth','gender','email','age','address_domicili',
-        'address_ktp','nik','religion','status','blood','gaji','pt','jurusan','years','ipk','cv',
-        'portofolio','sertificate','foto'
+    protected $guarded = [
+        'id'
     ];
 
-    public function recruitment()
+    public function participant()
     {
-        return $this->belongsTo(Recruitment::class);
+        return $this->belongsTo(Participant::class);
     }
 
-    public function keluarga()
+    public function families()
     {
-        return $this->hasMany(Keluarga::class);
+        return $this->hasMany(Family::class);
     }
 
-    public function prestasi()
-    {
-        return $this->hasMany(Prestasi::class);
+    public function educations() {
+        return $this->hasMany(Education::class);
     }
 }

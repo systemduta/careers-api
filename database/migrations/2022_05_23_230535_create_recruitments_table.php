@@ -17,11 +17,9 @@ class CreateRecruitmentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('name');
-            // $table->text('description');
             $table->text('jobdesc');
             $table->text('qualification');
             $table->text('address');
-            $table->text('type')->nullable();
             $table->string('image')->nullable();
             $table->date('date');
             $table->timestamps();

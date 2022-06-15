@@ -99,7 +99,6 @@ class RecruitmentController extends Controller
         $lowongan->jobdesc          = $request->jobdesc;
         $lowongan->qualification    = $request->qualification;
         $lowongan->address          = $request->address;
-        $lowongan->type             = $request->type;
         $lowongan->image            = $fileimageSimpan;
         $lowongan->date             = $request->date;
         $lowongan->save();
@@ -174,7 +173,6 @@ class RecruitmentController extends Controller
                 "jobdesc"       => $request->jobdesc,
                 "qualification" => $request->qualification,
                 "address"       => $request->address,
-                "type"          => $request->type,
                 "image"         => $fileimageSimpan,
                 "date"          => $request->date
             ]);

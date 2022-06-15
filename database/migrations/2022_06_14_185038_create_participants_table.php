@@ -16,29 +16,25 @@ class CreateParticipantsTable extends Migration
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('recruitment_id');
-            // $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->string('gender');
-            $table->string('phone');
             $table->string('place_birth');
             $table->date('date_birth');
+            $table->string('gender');
+            $table->string('address_domicili');
+            $table->string('phone');
             $table->string('email');
-            $table->integer('age');
-            $table->string('address');
-            $table->string('city');
-            $table->string('education');
-            $table->string('major');
-            $table->string('univercity');
-            $table->string('media_social')->nullable();
-            $table->string('information')->nullable();
-            $table->string('province');
-            $table->string('status')->nullable();
-            $table->string('district')->nullable();
-            $table->integer('postal_code');
+            $table->string('cv');
+            $table->string('portofolio');
+            $table->string('sertificate');
+            $table->string('foto');
+            $table->text('about');
+            $table->text('advantage');
+            $table->text('weakness');
+            $table->text('reason');
+            $table->text('vision');
             $table->timestamps();
 
             $table->foreign('recruitment_id')->references('id')->on('recruitments');
-            // $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

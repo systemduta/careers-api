@@ -2,35 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Magang;
+use App\Models\Participant;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Internship extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'recruitment_id','place_birth','name','date_birth','address_domicili','gender','email','resources','commitment','hope',
-        'ig','fb','twiter','pt','jurusan','semester','cv','fortofolio','sertificate','foto','address_domicili'
+    protected $guarded = [
+        'id'
     ];
 
-    public function recruitment()
+    public function participant()
     {
-        return $this->belongsTo(Recruitment::class);
+        return $this->belongsTo(Participant::class);
     }
 
-    public function magang()
+    public function magangs()
     {
         return $this->hasMany(Magang::class);
-    }
-
-    public function organisasi()
-    {
-        return $this->hasMany(Organization::class);
-    }
-
-    public function prestasi()
-    {
-        return $this->hasMany(Penghargaan::class);
     }
 }

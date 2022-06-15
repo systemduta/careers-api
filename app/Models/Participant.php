@@ -2,24 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Fulltime;
+use App\Models\Internship;
+use App\Models\Achievement;
+use App\Models\Organization;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class Participant extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'recruitment_id ', 'name','phone', 'gender', 'place_birth', 'date_birth','email','age','address','city',
-        'education','major','univercity','media_social','information', 'province', 'postal_code','status','district'
-    ];
+    protected $guarded = ['id'];
 
-    public function recruitment()
+    public function fulltime()
     {
-        return $this->belongsTo(Recruitment::class);
+        return $this->belongsTo(Fulltime::class);
     }
-    public function file()
+
+    public function internship()
     {
-        return $this->hasMany(File::class);
+        return $this->belongsTo(Internship::class);
+    }
+
+    public function organizations()
+    {
+        return $this->hasMany(Organization::class);
+    }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievement::class);
     }
 }
