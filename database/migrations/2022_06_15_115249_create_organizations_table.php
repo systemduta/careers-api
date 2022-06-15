@@ -15,16 +15,14 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('internship_id')->nullable();
-            $table->unsignedBigInteger('fulltime_id')->nullable();
+            $table->unsignedBigInteger('participant_id')->nullable();
             $table->string('name');
             $table->string('position');
             $table->string('period');
             $table->string('achievement');
             $table->timestamps();
 
-            $table->foreign('internship_id')->references('id')->on('internships');
-            $table->foreign('fulltime_id')->references('id')->on('fulltimes');
+            $table->foreign('participant_id')->references('id')->on('participants');
         });
     }
 

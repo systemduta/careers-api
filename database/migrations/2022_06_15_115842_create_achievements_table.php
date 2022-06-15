@@ -15,16 +15,14 @@ class CreateAchievementsTable extends Migration
     {
         Schema::create('achievements', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fulltime_id')->nullable();
-            $table->unsignedBigInteger('internship_id')->nullable();
+            $table->unsignedBigInteger('participant_id')->nullable();
             $table->string('name');
             $table->string('champion');
             $table->string('scope');
             $table->string('year');
             $table->timestamps();
 
-            $table->foreign('fulltime_id')->references('id')->on('fulltimes');
-            $table->foreign('internship_id')->references('id')->on('internships');
+            $table->foreign('participant_id')->references('id')->on('participants');
         });
     }
 
