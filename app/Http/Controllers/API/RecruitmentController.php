@@ -28,7 +28,10 @@ class RecruitmentController extends Controller
      */
     public function index()
     {
-        $data = Recruitment::with(['category'])->orderBy('id','DESC')->get();
+        $data = Recruitment::with(['category','participant'])->orderBy('id','DESC')->get();
+
+        if ($data > 0 )
+        return response()->json(['message' => 'Jobs Tidak bisa di hapus Karena ada Data Pelamar'],500);
 
         for($i=0; $i<count($data); $i++)
         {
@@ -186,10 +189,7 @@ class RecruitmentController extends Controller
      */
     public function destroy($id)
     {
-        $lowongan = Recruitment::with(['participant'])->count();
-
-        if ($lowongan > 0 )
-        return response()->json(['message' => 'Jobs Tidak bisa di hapus Karena ada Data Pelamar'],500);
+        $lowongan = Recruitment::findOrFail($id);
 
         $lowongan->delete();
 

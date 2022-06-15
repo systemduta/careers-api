@@ -16,10 +16,10 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'name'  => 'Recruitment'
+                'name'  => 'Fulltime'
             ],
             [
-                'name'  => 'Internship'
+                'name'  => 'Internship Program'
             ]
         ]);
     }
